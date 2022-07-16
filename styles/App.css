@@ -148,8 +148,8 @@ body {
   margin-top: 40px;
 }
 .product-info .product-title {
-  font-family: "Great Vibes", cursive;
-  font-size: 30px;
+  /* font-family: "Great Vibes", cursive; */
+  font-size: 18px;
 }
 .product-info .listen {
   margin: 10px 0 10px 0;
