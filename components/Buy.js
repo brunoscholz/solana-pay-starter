@@ -4,6 +4,7 @@ import { findReference, FindReferenceError } from '@solana/pay'
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import { InfinitySpin } from 'react-loader-spinner'
 import IPFSDownload from './IpfsDownload'
+import { addOrder, hasPurchased, fetchItem } from '../lib/api'
 
 const STATUS = {
   Initial: 'Initial',
@@ -16,6 +17,7 @@ export default function Buy({ itemID, price }) {
   const { publicKey, sendTransaction } = useWallet()
   const orderID = useMemo(() => Keypair.generate().publicKey, []) // Public key used to identify the order
 
+  const [item, setItem] = useState(null)
   const [loading, setLoading] = useState(false) // Loading state of all above
   const [status, setStatus] = useState(STATUS.Initial)
 
@@ -51,7 +53,6 @@ export default function Buy({ itemID, price }) {
       // Send the transaction to the network
       const txHash = await sendTransaction(tx, connection)
       console.log(`Transaction sent: https://solscan.io/tx/${txHash}?cluster=devnet`)
-      // Even though this could fail, we're just going to set it to true for now
       setStatus(STATUS.Submitted)
     } catch (error) {
       console.error(error)
@@ -59,6 +60,21 @@ export default function Buy({ itemID, price }) {
       setLoading(false)
     }
   }
+
+  useEffect(() => {
+    // Check if this address already has already purchased this item
+    // If so, fetch the item and set paid to true
+    // Async function to avoid blocking the UI
+    async function checkPurchased() {
+      const purchased = await hasPurchased(publicKey, itemID)
+      if (purchased) {
+        setStatus(STATUS.Paid)
+        const item = await fetchItem(itemID)
+        setItem(item)
+      }
+    }
+    checkPurchased()
+  }, [publicKey, itemID])
 
   useEffect(() => {
     if (status === STATUS.Submitted) {
@@ -71,6 +87,7 @@ export default function Buy({ itemID, price }) {
             clearInterval(interval)
             setStatus(STATUS.Paid)
             setLoading(false)
+            addOrder(order)
             alert('Thank you for your purchase!')
           }
         } catch (e) {
@@ -85,6 +102,15 @@ export default function Buy({ itemID, price }) {
       return () => {
         clearInterval(interval)
       }
+    }
+
+    async function getItem(itemID) {
+      const item = await fetchItem(itemID);
+      setItem(item);
+    }
+
+    if (status === STATUS.Paid) {
+      getItem(itemID);
     }
   }, [status])
 
@@ -102,16 +128,15 @@ export default function Buy({ itemID, price }) {
 
   return (
     <div className='product-actions'>
-      {status === STATUS.Paid ? (
-        <div className='listen yellow'>
+      {item ? (
+        <div className='btn-buy yellow'>
           <IPFSDownload
-            filename='emojis.zip'
-            hash='QmWWH69mTL66r3H8P4wUn24t1L5pvdTJGUTKBqT11KCHS5'
-            cta='Download emojis'
+            filename={item.filename}
+            hash={item.hash}
           />
         </div>
       ) : (
-        <button disabled={loading} className='listen yellow' onClick={processTransaction}>
+        <button disabled={loading} className='btn-buy yellow' onClick={processTransaction}>
           <div className='price'>{price} USDC</div>
         </button>
       )}

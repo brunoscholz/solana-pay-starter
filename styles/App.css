@@ -154,7 +154,7 @@ body {
   /* font-family: "Great Vibes", cursive; */
   font-size: 18px;
 }
-.product-info .product-actions .listen {
+.product-info .product-actions .btn-buy {
   margin: 10px 0 10px 0;
   text-align: center;
   padding: 10px;
@@ -164,7 +164,7 @@ body {
   border-radius: 10px;
   border: 1px solid #1d1d1d55;
 }
-.product-info .product-actions .listen:hover {
+.product-info .product-actions .btn-buy:hover {
   font-size: 15px;
   box-shadow: -2px 3px 10px 0px #7f818e;
 }
