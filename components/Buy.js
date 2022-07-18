@@ -133,6 +133,7 @@ export default function Buy({ itemID, price }) {
           <IPFSDownload
             filename={item.filename}
             hash={item.hash}
+            isFolder={item.isFolder}
           />
         </div>
       ) : (

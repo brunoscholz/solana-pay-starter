@@ -3,10 +3,13 @@ import { useWallet } from '@solana/wallet-adapter-react'
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
 import { useEffect, useState } from 'react'
 import Product from './Product'
+import CreateProduct from './CreateProduct'
 
 const Body = () => {
   // This will fetch the users' public key (wallet address) from any wallet we support
   const { publicKey } = useWallet()
+  const isOwner = publicKey ? publicKey.toString() === process.env.NEXT_PUBLIC_OWNER_PUBLIC_KEY : false
+  const [creating, setCreating] = useState(false)
   const [products, setProducts] = useState([])
 
   useEffect(() => {
@@ -67,13 +70,17 @@ const Body = () => {
             <img src='https://randomuser.me/api/portraits/men/22.jpg' className='profile' alt='active user' />
           </div>
           <div className='menu'>
-            <i className='fas fa-bars icons'></i>
-            Menu
+            {isOwner && (
+              <button className='create-product-button' onClick={() => setCreating(!creating)}>
+                {creating ? 'Close' : 'Create Product'}
+              </button>
+            )}
           </div>
         </div>
       </div>
 
       {/* We only render the connect button if public key doesn't exist */}
+      {creating && <CreateProduct />}
       {publicKey ? renderItemBuyContainer() : renderNotConnectedContainer()}
     </div>
   )

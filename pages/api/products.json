@@ -106,5 +106,29 @@
     "filename": "Cypherpunks.epub",
     "hash": "QmWuWdzhk87UUDnuHR9gH6BReedFb2YrXdNgrcT1NKKncr",
     "isFolder": true
+  },
+  {
+    "id": 10,
+    "name": "Fahrenheit 451",
+    "price": "0.03",
+    "image_url": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1383718290i/13079982.jpg",
+    "description": "follow goodreads link",
+    "filename": "Fahrenheit 451 by Ray Bradbury.epub",
+    "hash": "QmRieMPBJxhxPNig6Lx1c51yVjBmj4Lk4nSsv8dL4PXTCB",
+    "author": "Ray Bradbury",
+    "goodreads": "https://www.goodreads.com/book/show/13079982-fahrenheit-451",
+    "isFolder": false
+  },
+  {
+    "id": 11,
+    "name": "Democracy: The God That Failed",
+    "price": "0.03",
+    "image_url": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1379379301i/980031.jpg",
+    "description": "magnum opus of HHH",
+    "filename": "Democracy the god that Failed by HHH.epub",
+    "hash": "QmfKR1xmeT2a7qQPVEXzLdapiAmbVfftihgKWxGeL8FPtu",
+    "author": "Hans-Hermann Hoppe",
+    "goodreads": "https://www.goodreads.com/book/show/980031.Democracy",
+    "isFolder": false
   }
 ]

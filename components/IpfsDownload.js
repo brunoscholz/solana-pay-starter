@@ -1,8 +1,8 @@
 import React from 'react'
 import useIPFS from '../hooks/useIPFS'
 
-const IPFSDownload = ({ hash, filename }) => {
-  const file = useIPFS(hash, filename)
+const IPFSDownload = ({ hash, filename, isFolder=false }) => {
+  const file = useIPFS(hash, filename, isFolder)
 
   return (
     <div>
